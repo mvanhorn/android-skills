@@ -172,7 +172,7 @@ Update the Android CLI using the `android update` command.
                          installing. Supported: bash, zsh
 
     create
-              Usage: android create [-h] [--applicationId=PARAM] [--list] [--minSdk=PARAM]
+              Usage: android create [-h] [--application-id=PARAM] [--list] [--minSdk=PARAM]
                                     [--name=PARAM] [--namespace=PARAM] [--output=PARAM]
                                     [<template-name>]
               Create a new Android project from available templates. Allows
@@ -180,7 +180,7 @@ Update the Android CLI using the `android update` command.
               execution
               
               Options:
-                    --applicationId=PARAM  The application ID for the application
+                    --application-id=PARAM The application ID for the application
                                            (e.g. 'com.example.myapp')
                 -h, --help                 Show the help message for this command
                     --list                 List all available templates
