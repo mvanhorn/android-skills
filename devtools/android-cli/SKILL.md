@@ -27,13 +27,25 @@ interacting with devices, and managing the CLI environment.
 
 ## Installation
 
-If the android tool is not in the path, install it. To install run the following
-command:
+If the android tool is not in the path, install it. To install, run the command
+for your platform:
 
-- Linux: curl -fsSL https://dl.google.com/android/cli/latest/linux_x86_64/install.sh \| bash
-- Mac Arm: curl -fsSL https://dl.google.com/android/cli/latest/darwin_arm64/install.sh \| bash
-- Mac Intel: curl -fsSL https://dl.google.com/android/cli/latest/darwin_x86_64/install.sh \| bash
-- Windows: curl -fsSL https://dl.google.com/android/cli/latest/windows_x86_64/install.cmd -o "%TEMP%\\i.cmd" \&\& "%TEMP%\\i.cmd"
+```bash
+# Linux
+curl -fsSL https://dl.google.com/android/cli/latest/linux_x86_64/install.sh | bash
+
+# Mac Arm
+curl -fsSL https://dl.google.com/android/cli/latest/darwin_arm64/install.sh | bash
+
+# Mac Intel
+curl -fsSL https://dl.google.com/android/cli/latest/darwin_x86_64/install.sh | bash
+```
+
+Windows:
+
+```bat
+curl -fsSL https://dl.google.com/android/cli/latest/windows_x86_64/install.cmd -o "%TEMP%\i.cmd" && "%TEMP%\i.cmd"
+```
 
 ## SDK management
 

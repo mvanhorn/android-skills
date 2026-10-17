@@ -1,19 +1,21 @@
 A journey is an XML-specified test of an Android app's behavior. It consists of
 a list of `<action>` elements. For example:
-`xml
+
+```xml
 <journey name="My Journey">
-<description>
-A sample journey to illustrate the format
-</description>
-<actions>
-<action>
-Tap the "Home" icon
-</action>
-<action>
-Verify that the app is on its Home screen
-</action>
-</actions>
-</journey>`
+  <description>
+    A sample journey to illustrate the format
+  </description>
+  <actions>
+    <action>
+      Tap the "Home" icon
+    </action>
+    <action>
+      Verify that the app is on its Home screen
+    </action>
+  </actions>
+</journey>
+```
 
 Evaluate a journey by proceeding through the `<actions>` list in sequential
 order. Evaluate each `<action>` block individually.
@@ -46,8 +48,11 @@ sub-actions and evaluate them individually:
 Example:
 `<action>Search for soda and add the first result to the cart</action>`
 This should be evaluated as:
-`<action>Search for soda</action>
-<action>Add the first result to the cart</action>`
+
+```xml
+<action>Search for soda</action>
+<action>Add the first result to the cart</action>
+```
 
 If an `<action>` contains something that is not a specification for a UI
 interaction, alert the user that the journey is malformed and exit

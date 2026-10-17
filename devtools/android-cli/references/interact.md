@@ -45,24 +45,24 @@ screen` BEFORE doing anything else.
 ## Annotated Screenshot
 
 `android screen capture --annotate -o <file path>`
-`android screen resolve --screen <path> --string <string>`
+`android screen resolve --screenshot <path> --string <string>`
 
 The `--annotate` command adds numerical labels and bounding boxes around UI
 elements. Use this command to locate UI elements that cannot be located in the
 `layout` output.
 
-**IMPORTANT** : When using `android screen --annotate`, always *VISUALLY* examine
+**IMPORTANT** : When using `android screen capture --annotate`, always *VISUALLY* examine
 the resulting PNG file.
 
 To refer to these labels in input commands, use `screen resolve` to convert
 labels into coordinates:
 
-`android screen resolve --screen <file path> --string "#3"` returns `<x coord of
+`android screen resolve --screenshot <file path> --string "#3"` returns `<x coord of
 region 3> <y coord of region 3>`
 
 To save turns, you can combine shell commands:
 
-`adb shell input $(android screen resolve --screen screen.png --string "tap #34")`
+`adb shell input $(android screen resolve --screenshot screen.png --string "tap #34")`
 
 This command taps on region #34 from `screen.png`
 
@@ -74,23 +74,27 @@ on a particular element.
 
 Interact with UI elements with their `center` coordinate or their `bounds`
 coordinates:
-`json
+
+```json
 {
-"key": -248568265,
-"class": "android.widget.Button",
-"bounds": "[138,9][167,38]",
-"center": "[152,23]"
-}`
+  "key": -248568265,
+  "class": "android.widget.Button",
+  "bounds": "[138,9][167,38]",
+  "center": "[152,23]"
+}
+```
 
 To tap on this button, you would execute `adb shell input tap 152 23`. This taps
 the center.
 
-    {
-      "key": 12487234,
-      "class": "com.example.ui.ScrollableList",
-      "bounds": "[100,200][400,600]",
-      "center": "[250,400]"
-    }
+```json
+{
+  "key": 12487234,
+  "class": "com.example.ui.ScrollableList",
+  "bounds": "[100,200][400,600]",
+  "center": "[250,400]"
+}
+```
 
 To scroll down on this list, you would execute `adb shell input swipe 250 400
 250 200 500`. This swipes from the center to the top over 500ms.
