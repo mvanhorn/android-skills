@@ -6,7 +6,7 @@ description: Analyze and create a testing strategy for Android apps - install te
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
-  last-updated: '2026-10-23'
+  last-updated: '2026-10-26'
   keywords:
   - android
   - testing
@@ -112,6 +112,9 @@ fakes using the Dependency Injection framework installed to:
 
 ## Step 5: Unit testing
 
+A failure in any test added in Steps 5-14 is handled in Test integrity before
+the test file is changed.
+
 Create a task to add or review unit tests in every file that contains business
 logic (ViewModels, Repositories, and database-related classes such as DAOs).
 Don't create unit tests for Activities, Compose layouts, or dependency injection
@@ -153,6 +156,7 @@ expected when different states are passed, and when user actions are performed.
 - Use the ComposeTestRule with a `ComponentActivity` to access resources such as strings.
 - Always match with semantic matchers first. If the matcher is too complicated to write (using more than three matchers to find a single element), use `testTag`.
 - Always verify state restoration.
+- An `AppNotIdleException` from `waitForIdle()` follows Test integrity, and `mainClock.autoAdvance = false` is not a fix for a production frame loop.
 
 ### **Views (XML) UI behavior tests**
 
@@ -193,6 +197,29 @@ features.
 Install JaCoCo for local testing code coverage.
 
 - Add the `jacoco` plugin to each module that contains tests.
+
+## Test integrity
+
+Treat a failed assertion, timeout, or idle failure as a production defect
+unless it is clearly a test-setup mistake (wrong sourceset, missing test
+dependency, or a matcher aimed at the wrong node).
+
+Do not freeze `mainClock`, call `advanceTimeBy` to skip a loop that never
+idles, or relax the assertion to force a pass. Clock control stays allowed
+only when the test itself asserts animation timing and the composable still
+idles under the default clock.
+
+If the same behavior on a device would drain the battery, ANR, or leave the UI
+stale, change production code first. Use a lifecycle-aware animation that
+idles, such as `rememberInfiniteTransition`, instead of an unbounded
+`withFrameNanos` loop. Keep a state write that is already on the main thread
+direct instead of an extra `Dispatchers.Main` launch that does no real async
+work.
+
+Then rerun the original test with an unmanipulated clock and `waitForIdle()`.
+Genuine async work still uses the project's test dispatcher or idling resource
+rather than deleting the assertion. Step 4's fakes stay limited to
+dependencies outside the behavior under test.
 
 ## Final touches
 
